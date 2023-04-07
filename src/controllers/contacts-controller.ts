@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import httpStatus from "http-status";
 import contactsServices from "../services/contacts-services.js";
+import { Contact } from "../types.js";
 
 
 async function getAllContacts(_: Request, res: Response, next: NextFunction){
@@ -11,12 +12,15 @@ async function getAllContacts(_: Request, res: Response, next: NextFunction){
         next(error);
     }
 }
-async function test(req: Request, res: Response, next: NextFunction){
+async function insertContact(req: Request, res: Response, next: NextFunction){
     try {
-        res.status(httpStatus.OK).send("Test")
+        const contact = req.body as Contact
+        await contactsServices.insertContact(contact)
+
+        res.sendStatus(httpStatus.CREATED);
     } catch (error) {
         next(error)
     }
 }
 
-export default { getAllContacts, test }
+export default { getAllContacts, insertContact }
