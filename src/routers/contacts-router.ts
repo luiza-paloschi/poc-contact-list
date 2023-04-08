@@ -11,6 +11,6 @@ contactsRouter
   .get('/:id', contactsController.getgetContactById)
   .post('/', validationMiddleware.validateBody(ContactSchema), contactsController.insertContact)
   .put('/:id', validationMiddleware.validateBody(ContactSchema), contactsController.updateContact)
-  //.delete('/:id', )
+  .delete('/:id', contactsController.deleteContact)
 
 export default contactsRouter;

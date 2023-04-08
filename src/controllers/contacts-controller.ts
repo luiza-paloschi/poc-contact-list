@@ -14,7 +14,7 @@ async function getAllContacts(_: Request, res: Response, next: NextFunction){
 }
 
 async function getgetContactById(req: Request, res: Response, next: NextFunction){
-    const {id} = req.params
+    const {id} = req.params;
     try {
         const contact = await contactsServices.getContactById(Number(id));
         res.status(httpStatus.OK).send(contact);
@@ -25,25 +25,36 @@ async function getgetContactById(req: Request, res: Response, next: NextFunction
 
 async function insertContact(req: Request, res: Response, next: NextFunction){
     try {
-        const contact = req.body as Contact
-        await contactsServices.insertContact(contact)
+        const contact = req.body as Contact;
+        await contactsServices.insertContact(contact);
 
         res.sendStatus(httpStatus.CREATED);
     } catch (error) {
-        next(error)
+        next(error);
     }
 }
 
 async function updateContact(req: Request, res: Response, next: NextFunction){
     try {
-        const contact = req.body as Contact
-        const {id} = req.params
-        await contactsServices.updateContact({...contact, id: Number(id)})
+        const contact = req.body as Contact;
+        const {id} = req.params;
+        await contactsServices.updateContact({...contact, id: Number(id)});
 
         res.sendStatus(httpStatus.OK);
     } catch (error) {
-        next(error)
+        next(error);
     }
 }
 
-export default { getAllContacts, insertContact, getgetContactById, updateContact }
+async function deleteContact(req: Request, res: Response, next: NextFunction){
+    try {
+        const {id} = req.params;
+        await contactsServices.deleteContact(Number(id));
+
+        res.sendStatus(httpStatus.OK);
+    } catch (error) {
+        next(error);
+    }
+}
+
+export default { getAllContacts, insertContact, getgetContactById, updateContact, deleteContact }

@@ -31,4 +31,9 @@ async function update({id, name, phone, email}: ContactEntity) : Promise<QueryRe
          WHERE id=$4`, [name, phone, email, id]);
 }
 
-export default {getAll, insertContact, findByPhone, findById, update}
+async function deleteContact(id: number){
+    return await connection.query(
+        `DELETE FROM contacts WHERE id=$1`, [id]);
+}
+
+export default {getAll, insertContact, findByPhone, findById, update, deleteContact}
