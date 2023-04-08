@@ -10,7 +10,7 @@ contactsRouter
   .get('/', contactsController.getAllContacts)
   .get('/:id', contactsController.getgetContactById)
   .post('/', validationMiddleware.validateBody(ContactSchema), contactsController.insertContact)
-  //.put('/:id', )
+  .put('/:id', validationMiddleware.validateBody(ContactSchema), contactsController.updateContact)
   //.delete('/:id', )
 
 export default contactsRouter;

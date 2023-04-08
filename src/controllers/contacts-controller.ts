@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import httpStatus from "http-status";
 import contactsServices from "../services/contacts-services.js";
-import { Contact } from "../types.js";
+import { Contact, ContactEntity } from "../types.js";
 
 
 async function getAllContacts(_: Request, res: Response, next: NextFunction){
@@ -34,4 +34,16 @@ async function insertContact(req: Request, res: Response, next: NextFunction){
     }
 }
 
-export default { getAllContacts, insertContact, getgetContactById }
+async function updateContact(req: Request, res: Response, next: NextFunction){
+    try {
+        const contact = req.body as Contact
+        const {id} = req.params
+        await contactsServices.updateContact({...contact, id: Number(id)})
+
+        res.sendStatus(httpStatus.OK);
+    } catch (error) {
+        next(error)
+    }
+}
+
+export default { getAllContacts, insertContact, getgetContactById, updateContact }

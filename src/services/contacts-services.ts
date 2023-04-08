@@ -16,10 +16,17 @@ async function insertContact({name, phone, email}: Contact){
     await contactsRepositories.insertContact({name, phone, email});
 }
 
+async function updateContact({id, name, phone, email}: ContactEntity){
+    const { rowCount } = await contactsRepositories.findById(id);
+    if (!rowCount) throw errors.notFoundError("No results for this search!");
+
+    await contactsRepositories.update({id, name, phone, email});
+}
+
 async function getContactById(id: number): Promise<ContactEntity>{
     const {rows: [contact], rowCount } = await contactsRepositories.findById(id);
     if (!rowCount) throw errors.notFoundError("No results for this search!");
     return contact;
 }
 
-export default {getAll, insertContact, getContactById}
+export default {getAll, insertContact, getContactById, updateContact}
