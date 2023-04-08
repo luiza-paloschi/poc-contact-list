@@ -17,9 +17,12 @@ async function insertContact({name, phone, email}: Contact): Promise<QueryResult
 async function findByPhone(phone: string): Promise<QueryResult<ContactEntity>>{
     return await connection.query(
         `
-        SELECT * FROM contacts
-        WHERE phone=$1
-        `, [phone]);
+        SELECT * FROM contacts WHERE phone=$1`, [phone]);
 }
 
-export default {getAll, insertContact, findByPhone}
+async function findById(id: number): Promise<QueryResult<ContactEntity>>{
+    return await connection.query(
+        `SELECT * FROM contacts WHERE id=$1`, [id]);
+}
+
+export default {getAll, insertContact, findByPhone, findById}

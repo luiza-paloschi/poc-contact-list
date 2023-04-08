@@ -12,6 +12,17 @@ async function getAllContacts(_: Request, res: Response, next: NextFunction){
         next(error);
     }
 }
+
+async function getgetContactById(req: Request, res: Response, next: NextFunction){
+    const {id} = req.params
+    try {
+        const contact = await contactsServices.getContactById(Number(id));
+        res.status(httpStatus.OK).send(contact);
+    } catch (error) {
+        next(error);
+    }
+}
+
 async function insertContact(req: Request, res: Response, next: NextFunction){
     try {
         const contact = req.body as Contact
@@ -23,4 +34,4 @@ async function insertContact(req: Request, res: Response, next: NextFunction){
     }
 }
 
-export default { getAllContacts, insertContact }
+export default { getAllContacts, insertContact, getgetContactById }

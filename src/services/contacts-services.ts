@@ -1,6 +1,6 @@
 import errors from "../errors/index.js";
 import contactsRepositories from "../repositories/contacts-repositories.js";
-import { Contact } from "../types.js";
+import { Contact, ContactEntity } from "../types.js";
 
 
 async function getAll() {
@@ -16,4 +16,10 @@ async function insertContact({name, phone, email}: Contact){
     await contactsRepositories.insertContact({name, phone, email});
 }
 
-export default {getAll, insertContact}
+async function getContactById(id: number): Promise<ContactEntity>{
+    const {rows: [contact], rowCount } = await contactsRepositories.findById(id);
+    if (!rowCount) throw errors.notFoundError("No results for this search!");
+    return contact;
+}
+
+export default {getAll, insertContact, getContactById}

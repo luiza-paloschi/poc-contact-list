@@ -8,6 +8,7 @@ const contactsRouter = Router();
 
 contactsRouter
   .get('/', contactsController.getAllContacts)
+  .get('/:id', contactsController.getgetContactById)
   .post('/', validationMiddleware.validateBody(ContactSchema), contactsController.insertContact)
   //.put('/:id', )
   //.delete('/:id', )
